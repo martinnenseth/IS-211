@@ -22,20 +22,16 @@ public class InsertSortAnalysis extends EmpiricalAnalysis {
     }
 
     public void insertSort(int[] data) {
-        int n = data.length;
-
-        //outer loop picks the next value to insert
-        for (int i = 1; i < n; i++) {
-            //inner loop inserts it
-            // added assign counter from super
-            int nextval = super.assign(data[i]);
-            int j = i-1;
-            //added comparison counter from super
-            while (j >= 0 && super.greaterThan(data[j], nextval)) {
-                data[j + 1] = data[j];
-                j--;
+        int n = assign(data.length);
+        
+        for (int i = assign(1); lessThan(i, n); assign(i++)) {
+            int nextval = assign(data[i]);
+            int j = assign(i-1);
+            while ((greaterThan(j,0) || equal(j,0)) && greaterThan(data[j], nextval)) {
+                data[j + 1] = assign(data[j]);
+                    assign(j--);
             }
-            data[j+1] = nextval;
+            data[j+1] = assign(nextval);
         }
     }
 
