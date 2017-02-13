@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="is2071">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/GarbageCollection/src/is207.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
