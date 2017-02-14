@@ -78,7 +78,8 @@ public class Heap
     }
 
     // Convenience getters and setters for the objects
-    public void setRoot(int addr) {
+    public void setRoot(int addr)
+    {
         root = addr;
     }
 

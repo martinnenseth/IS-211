@@ -77,14 +77,22 @@ public class CompactingGC extends Heap
      */
     private void mark(int block) {
 
-        for (int i = 0; i == memory.length; i++){
+        if (memory.length <= 0) System.out.println("HEY, stop it!");
+        // Initialization = 0, termination = memory.length, increment i by one per iteration.
+        for (int i = 0; i <= memory.length; i++) {
             setFlag(alloc(block, NULL, NULL, "root"), GARBAGE);
-            System.out.println(getFlag(alloc(block,NULL,NULL, "root")));
+            //Check if the loop ran and worked.
+            // int result = getFlag(alloc(block, NULL, NULL, "root"));
+            //System.out.println("hei" + result);
+            //if (i >= 1) {
+            //  mark(getSize(alloc(block, NULL, NULL, "theboss")));
         }
 
-
-
+        System.out.println(memory.length);
     }
+
+
+
 
 
     private int calculateAddresses() {
@@ -128,6 +136,15 @@ public class CompactingGC extends Heap
     public static void main(String[] args) {
         CompactingGC heap = new CompactingGC();
         heap.mark(10);
+
+        //int root = heap.alloc(10, NULL, NULL, "ro00000ot");
+        //heap.setRoot(root);
+        //heap.printMemoryMap("test Testesen");
+
+        //int tmp1 = heap.alloc(2, NULL, NULL, "øy");
+        //heap.printMemoryMap("testtttttttt1");
+
+
         /**   CompactingGC heap = new CompactingGC();
         heap.printMemoryMap("Start protram");
         System.out.println("Create ROOT");
