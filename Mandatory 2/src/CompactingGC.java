@@ -71,19 +71,17 @@ public class CompactingGC extends Heap
 
     /**
      * ToDO:
-     * Mark all objects in the memory with setFlag(addr, garbage)
-     * Denne logikken ville fungert korrekt om det memory inneholdt objekter
      *
-     * @param
+     *
+     * @param block     alloc(externalSize)
      */
-    private void mark(CompactingGC obj, int addr) {
-    for (int i : memory){
-        if (getFlag(addr) != GARBAGE)  // Skal sjekke om flagget er garbage eller ikke
-        {
-           obj.setFlag(addr, GARBAGE);
-            System.out.println(memory.length);
+    private void mark(int block) {
+
+        for (int i = 0; i == memory.length; i++){
+            setFlag(alloc(block, NULL, NULL, "root"), GARBAGE);
+            System.out.println(getFlag(alloc(block,NULL,NULL, "root")));
         }
-    }
+
 
 
     }
@@ -129,7 +127,7 @@ public class CompactingGC extends Heap
 
     public static void main(String[] args) {
         CompactingGC heap = new CompactingGC();
-        heap.mark(heap, 0);
+        heap.mark(10);
         /**   CompactingGC heap = new CompactingGC();
         heap.printMemoryMap("Start protram");
         System.out.println("Create ROOT");
