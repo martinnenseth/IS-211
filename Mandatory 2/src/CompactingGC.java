@@ -36,7 +36,7 @@ public class CompactingGC extends Heap
         setFlag(addr, GARBAGE);
 
         setFree(addr + size);
-        construct(addr, ptr1, ptr2, data);
+        //construct(addr, ptr1, ptr2, data);
         return addr;
     }
 
@@ -71,25 +71,37 @@ public class CompactingGC extends Heap
 
     /**
      * ToDO:
+     *      Implementere logikk for å også markerere de siste elementene i lista om addr(som er incrementes med 8)
+     *      hvis incrementen på addr er ugyldig, altså større enn arrayet.
      *
+     *      if (free < memory.length) return;
      *
      * @param block     alloc(externalSize)
      */
     private void mark(int block) {
 
-        if (memory.length <= 0) System.out.println("HEY, stop it!");
-        // Initialization = 0, termination = memory.length, increment i by one per iteration.
-        for (int i = 0; i <= memory.length; i++) {
-            setFlag(alloc(block, NULL, NULL, "root"), GARBAGE);
-            //Check if the loop ran and worked.
-            // int result = getFlag(alloc(block, NULL, NULL, "root"));
-            //System.out.println("hei" + result);
-            //if (i >= 1) {
-            //  mark(getSize(alloc(block, NULL, NULL, "theboss")));
-        }
+            if (memory.length == 0) System.out.println("HEY, stop it!");
+        try {
+            if (block != REACHABLE){
+                System.out.println("block in use, sorrey");
+                return;
+            }
+            // Initialization = 0, termination = memory.length, increment i by one per iteration.
+            for (int i = 0; i <= memory.length; i++) {
 
-        System.out.println(memory.length);
-    }
+                alloc(block, NULL, NULL, "root");
+
+
+                //Check if the loop ran and worked.
+                //int result = getFlag(alloc(block, NULL, NULL, "root"));
+                //System.out.println("hei" + result);
+
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.out.println(e);
+        }
+           // System.out.println(memory.length);
+        }
 
 
 
@@ -135,8 +147,9 @@ public class CompactingGC extends Heap
 
     public static void main(String[] args) {
         CompactingGC heap = new CompactingGC();
-        heap.mark(10);
+        heap.mark(5);
 
+        //heap.alloc(5, NULL, NULL, "streng");
         //int root = heap.alloc(10, NULL, NULL, "ro00000ot");
         //heap.setRoot(root);
         //heap.printMemoryMap("test Testesen");
