@@ -15,6 +15,8 @@ public class CompactingGC extends Heap
      */
     int free;
 
+    int temp;
+
 
     public CompactingGC() {
         setFree(0);
@@ -75,12 +77,11 @@ public class CompactingGC extends Heap
 
 
     private void mark(int block) {
-        // copy from 1a
+
     }
-
-
     private int calculateAddresses() {
-        // opg 2a
+        return 1;
+
     }
 
 
@@ -138,9 +139,12 @@ public class CompactingGC extends Heap
         System.out.println("Create k22");
         int branch22 = heap.alloc(8, NULL, NULL, "keep22");
         heap.setPtr2(branch2, branch22);
+        heap.printMem();
         heap.printMemoryMap("About to trigger gc");
         System.out.println("Create tmp3");
         tmp = heap.alloc(17, NULL, NULL, "tmp ojb 3");
         heap.printMemoryMap("end of program");
+
+
     }
 }

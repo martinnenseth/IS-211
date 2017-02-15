@@ -127,14 +127,47 @@ public class MarkAndSweepGC extends Heap
         printMemoryMap();
     }
 
-
+    /**
+     *
+     Finds all usable objects, starting from root, and following
+     * non-NULL values in ptr1 and ptr2
+     */
     private void mark(int block) {
-        // oppgave 1 a
+        //Check if block has been flagged
+        if (getFlag(block)!= REACHABLE){
+            this.setFlag(block, REACHABLE);
+        }
+        // Always starts with root
+        if (this.getFlag(block)!= FREE){
+            //Check 1st pointer
+            if (this.getPtr1(block)!= NULL){
+                mark(this.getPtr1(block));
+            }
+            //check 2nd pointer
+            if (this.getPtr2(block)!= NULL){
+                mark(this.getPtr2(block));
+
+            }
+        }
     }
 
-
+    /**
+     * Returns unusable objects to the freeList, so the memory
+     * blocks can be reused for other objects.
+     * Here and in any other problem where you have to visit every
+     * memory block in the heap, you can assume that the first
+     * block has address 0 (zero), and that the address of the
+     * next block is addr + getSize(addr), where addr is the address
+     * of the current block
+     */
     private void sweep() {
-        //oppgave 1b
+        int i = 0;
+        while (i < HEAP_SIZE){
+            if(this.getFlag(i) == GARBAGE){
+                this.setFlag(i, FREE);
+                i = i + this.getSize(i);
+            }
+        }
     }
 
 
