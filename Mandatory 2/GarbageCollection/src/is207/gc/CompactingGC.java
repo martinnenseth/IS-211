@@ -15,7 +15,6 @@ public class CompactingGC extends Heap
      */
     int free;
 
-    int temp;
 
 
     public CompactingGC() {
@@ -77,21 +76,64 @@ public class CompactingGC extends Heap
 
 
     private void mark(int block) {
+        //revision after discussing with other groups
+        if(block != NULL){
+            this.setFlag(block, REACHABLE);
+            mark(this.getPtr1(block));
+            mark(this.getPtr2(block));
+        }
 
     }
+    //Got help from Christians group
     private int calculateAddresses() {
-        return 1;
-
+        int current = 0;
+        int offset = 0;
+        while (current < HEAP_SIZE){
+            if (getFlag(current) == FREE|| getFlag(current)==GARBAGE){
+                offset += getSize(current);
+            }
+            else {
+                setNext(current, (getSize(current))-offset );
+            }
+            current = current +getSize(current);
+        }
+        return memory.length - offset;
     }
 
-
+    //Got help from Christians group
     private void updatePointers() {
-        //opg 2b//
+        int block = 0;
+        while (block < memory.length){
+            int ptr1 = getPtr1(block);
+            int ptr2 = getPtr2(block);
+            if (ptr1 != NULL && ptr2 != NULL){
+                setPtr1(block, getNext(block));
+                ptr1 = getPtr1(block);
+                setPtr2(block, getNext(block) + getSize(ptr1));
+            }
+            else if (ptr1 !=NULL){
+                setPtr1(block, getNext(block));
+            }
+            else if(ptr2 !=NULL){
+                setPtr2(block, getNext(block));
+            }
+            block = block + getSize(block);
+        }
     }
 
-
+    //Got help from Christians group
     private void moveObjects() {
-        // opg 2c
+        int block = 0;
+        int newAddr = 0;
+        while (block < memory.length) {
+            if (getFlag(block) != FREE && getFlag(block) != GARBAGE) {
+                if (newAddr != 0 && newAddr != NULL) {
+                    memCopy(block, getSize(block), newAddr);
+                }
+                newAddr = getNext(block);
+            }
+            block += getSize(block);
+        }
     }
 
 

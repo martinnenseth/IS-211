@@ -115,12 +115,6 @@ public class MarkAndSweepGC extends Heap
         setData(addr, data);
     }
 
-    public void printFreeList(){
-        for (int i : freeList){
-
-        }
-    }
-
     public void gc() {
         System.out.println("Starting gc");
         printMemoryMap();
@@ -138,6 +132,7 @@ public class MarkAndSweepGC extends Heap
      * non-NULL values in ptr1 and ptr2
      */
     private void mark(int block) {
+        //initial version
         //Check if block has been flagged
         if (getFlag(block)!= REACHABLE){
             this.setFlag(block, REACHABLE);
@@ -169,16 +164,12 @@ public class MarkAndSweepGC extends Heap
         int block = 0;
         while (block <= HEAP_SIZE-1){
             if(this.getFlag(block) == GARBAGE){
-                System.out.println("Inner Loop");
                 addToFreeList(block,this.getSize(block));
                 this.setFlag(block, FREE);
                 block = block + this.getSize(block);
-                System.out.println("Address: " + block);
             }
-            else
-                {
+            else {
                 block = block + this.getSize(block);
-                System.out.println("Address: " + block);
             }
         }
 
