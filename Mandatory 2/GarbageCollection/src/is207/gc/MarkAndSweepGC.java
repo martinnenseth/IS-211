@@ -115,7 +115,6 @@ public class MarkAndSweepGC extends Heap
         setData(addr, data);
     }
 
-
     public void gc() {
         System.out.println("Starting gc");
         printMemoryMap();
@@ -133,6 +132,7 @@ public class MarkAndSweepGC extends Heap
      * non-NULL values in ptr1 and ptr2
      */
     private void mark(int block) {
+        //initial version
         //Check if block has been flagged
         if (getFlag(block)!= REACHABLE){
             this.setFlag(block, REACHABLE);
@@ -161,13 +161,18 @@ public class MarkAndSweepGC extends Heap
      * of the current block
      */
     private void sweep() {
-        int i = 0;
-        while (i < HEAP_SIZE){
-            if(this.getFlag(i) == GARBAGE){
-                this.setFlag(i, FREE);
-                i = i + this.getSize(i);
+        int block = 0;
+        while (block <= HEAP_SIZE-1){
+            if(this.getFlag(block) == GARBAGE){
+                addToFreeList(block,this.getSize(block));
+                this.setFlag(block, FREE);
+                block = block + this.getSize(block);
+            }
+            else {
+                block = block + this.getSize(block);
             }
         }
+
     }
 
 
@@ -207,8 +212,10 @@ public class MarkAndSweepGC extends Heap
         int branch22 = heap.alloc(8, NULL, NULL, "keep22");
         heap.setPtr2(branch2, branch22);
         heap.printMemoryMap();
-        System.out.println("Create tmp3");
-        tmp = heap.alloc(17, NULL, NULL, "tmp ojb 3");
-        heap.printMemoryMap();
+        //System.out.println("Create tmp3");
+        //tmp = heap.alloc(17, NULL, NULL, "tmp ojb 3");
+        //heap.printMemoryMap();
+        heap.gc();
+
     }
 }
