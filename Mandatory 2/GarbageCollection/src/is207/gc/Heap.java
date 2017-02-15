@@ -36,7 +36,7 @@ package is207.gc;
  *
  * @author evenal
  */
-public class Heap
+public class    Heap
 {
 
     public static final int HEAP_SIZE = 100;
@@ -128,6 +128,15 @@ public class Heap
 
     // these are only used to identify objects for testing
     // we don't give them to the student
+    public void printMem(){
+    int index =0;
+    for(int i : memory){
+        System.out.print("Index:"+index+" Value: "+ i + "\n");
+
+        index ++;
+    }
+    }
+
     public String getData(int addr) {
         char[] buf = new char[getSize(addr) - DATA_OFFSET];
         for (int i = 0; i < buf.length; i++)
@@ -148,3 +157,5 @@ public class Heap
         }
     }
 }
+
+

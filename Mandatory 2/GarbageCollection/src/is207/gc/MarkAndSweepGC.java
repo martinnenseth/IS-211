@@ -115,6 +115,11 @@ public class MarkAndSweepGC extends Heap
         setData(addr, data);
     }
 
+    public void printFreeList(){
+        for (int i : freeList){
+
+        }
+    }
 
     public void gc() {
         System.out.println("Starting gc");
@@ -127,14 +132,56 @@ public class MarkAndSweepGC extends Heap
         printMemoryMap();
     }
 
-
+    /**
+     *
+     Finds all usable objects, starting from root, and following
+     * non-NULL values in ptr1 and ptr2
+     */
     private void mark(int block) {
-        // oppgave 1 a
+        //Check if block has been flagged
+        if (getFlag(block)!= REACHABLE){
+            this.setFlag(block, REACHABLE);
+        }
+        // Always starts with root
+        if (this.getFlag(block)!= FREE){
+            //Check 1st pointer
+            if (this.getPtr1(block)!= NULL){
+                mark(this.getPtr1(block));
+            }
+            //check 2nd pointer
+            if (this.getPtr2(block)!= NULL){
+                mark(this.getPtr2(block));
+
+            }
+        }
     }
 
-
+    /**
+     * Returns unusable objects to the freeList, so the memory
+     * blocks can be reused for other objects.
+     * Here and in any other problem where you have to visit every
+     * memory block in the heap, you can assume that the first
+     * block has address 0 (zero), and that the address of the
+     * next block is addr + getSize(addr), where addr is the address
+     * of the current block
+     */
     private void sweep() {
-        //oppgave 1b
+        int block = 0;
+        while (block <= HEAP_SIZE-1){
+            if(this.getFlag(block) == GARBAGE){
+                System.out.println("Inner Loop");
+                addToFreeList(block,this.getSize(block));
+                this.setFlag(block, FREE);
+                block = block + this.getSize(block);
+                System.out.println("Address: " + block);
+            }
+            else
+                {
+                block = block + this.getSize(block);
+                System.out.println("Address: " + block);
+            }
+        }
+
     }
 
 
@@ -174,8 +221,10 @@ public class MarkAndSweepGC extends Heap
         int branch22 = heap.alloc(8, NULL, NULL, "keep22");
         heap.setPtr2(branch2, branch22);
         heap.printMemoryMap();
-        System.out.println("Create tmp3");
-        tmp = heap.alloc(17, NULL, NULL, "tmp ojb 3");
-        heap.printMemoryMap();
+        //System.out.println("Create tmp3");
+        //tmp = heap.alloc(17, NULL, NULL, "tmp ojb 3");
+        //heap.printMemoryMap();
+        heap.gc();
+
     }
 }
