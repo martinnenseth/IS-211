@@ -115,6 +115,11 @@ public class MarkAndSweepGC extends Heap
         setData(addr, data);
     }
 
+    public void printFreeList(){
+        for (int i : freeList){
+
+        }
+    }
 
     public void gc() {
         System.out.println("Starting gc");
@@ -161,13 +166,22 @@ public class MarkAndSweepGC extends Heap
      * of the current block
      */
     private void sweep() {
-        int i = 0;
-        while (i < HEAP_SIZE){
-            if(this.getFlag(i) == GARBAGE){
-                this.setFlag(i, FREE);
-                i = i + this.getSize(i);
+        int block = 0;
+        while (block <= HEAP_SIZE-1){
+            if(this.getFlag(block) == GARBAGE){
+                System.out.println("Inner Loop");
+                addToFreeList(block,this.getSize(block));
+                this.setFlag(block, FREE);
+                block = block + this.getSize(block);
+                System.out.println("Address: " + block);
+            }
+            else
+                {
+                block = block + this.getSize(block);
+                System.out.println("Address: " + block);
             }
         }
+
     }
 
 
@@ -207,8 +221,10 @@ public class MarkAndSweepGC extends Heap
         int branch22 = heap.alloc(8, NULL, NULL, "keep22");
         heap.setPtr2(branch2, branch22);
         heap.printMemoryMap();
-        System.out.println("Create tmp3");
-        tmp = heap.alloc(17, NULL, NULL, "tmp ojb 3");
-        heap.printMemoryMap();
+        //System.out.println("Create tmp3");
+        //tmp = heap.alloc(17, NULL, NULL, "tmp ojb 3");
+        //heap.printMemoryMap();
+        heap.gc();
+
     }
 }
