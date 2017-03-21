@@ -56,6 +56,15 @@ public class Regatta {
 
 
     public void registerFinish(int sailno) {
+        // Check that the boat is a competitor
+        if (!competitors.containsKey(sailno)){
+            System.out.println("Boat with" + sailno + "is not a registered competitor");
+            return;
+        }
+        if (competitors.get(sailno).getPassedGoal()){
+            System.out.println("Boat with" + sailno + "has already passed goal");
+            return;
+        }
         competitors.get(sailno).addPlacement(this.currentRace, this.raceFinish);
         raceFinish ++;
     }
@@ -63,6 +72,11 @@ public class Regatta {
 
     // oppgave 2
     public void endRace() {
+        // Iterate through the entire hashmap and set goalPassed on all elements in the map to false.
+        Collection<Boat> values = competitors.values();
+        for (Boat competitor : values){
+            competitor.setPassedGoal(false);
+        }
         raceFinish = 1;
         updateScore();
     }

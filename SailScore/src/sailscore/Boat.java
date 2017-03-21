@@ -22,6 +22,7 @@ public class Boat implements Comparable<Boat> {
     private String name;
     private List <Integer> placements;
     private int score;
+    private boolean passedGoal;
 
     public Boat(int sailNo, String name) {
         // oppgave 1
@@ -63,6 +64,15 @@ public class Boat implements Comparable<Boat> {
 
         System.out.println("Placements: " + joiner.toString());
     }
+
+    public boolean getPassedGoal() {
+        return passedGoal;
+    }
+
+    public void setPassedGoal(boolean passedGoal) {
+        this.passedGoal = passedGoal;
+    }
+
 
     public void computeScore(){
         int sum = 0;
