@@ -28,12 +28,12 @@ public class Hp11cEngine implements CalculatorEngine {
 
     @Override
     public void pointPressed() {
-
+        
     }
 
     @Override
     public void chsPressed() {
-
+        displayValue = displayValue - (displayValue * 2);
     }
 
     @Override

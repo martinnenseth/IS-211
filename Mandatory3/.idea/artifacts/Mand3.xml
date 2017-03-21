@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Mand3">
+    <output-path>$PROJECT_DIR$/out/artifacts/Mand3</output-path>
+    <root id="archive" name="Mand3.jar">
+      <element id="dir-copy" path="$PROJECT_DIR$/src/hp11c" />
+    </root>
+  </artifact>
+</component>
