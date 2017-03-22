@@ -41,7 +41,7 @@ public class Boat implements Comparable<Boat> {
         return sailNo;
     }
 
-    public void addPlacement(int raceNr, int i){
+    public void addPlacement(int i){
         placements.add(i);
     }
 
