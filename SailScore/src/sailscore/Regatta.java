@@ -14,7 +14,7 @@ import java.util.*;
 public class Regatta {
     private int maxRaces;
     private int currentRace;
-    private HashMap<Integer, Boat> competitors;
+    private ArrayList<Boat> competitors;
     private int raceFinish;
 
     // oppgave 1
@@ -22,59 +22,53 @@ public class Regatta {
         maxRaces = 10;
         currentRace = 0;
         raceFinish = 1;
-        competitors = new HashMap<>();
-
+        competitors = new ArrayList<>();
     }
 
 
-    public void addCompetitor(Boat c) {
+    private void addCompetitor(Boat c) {
         // oppgave 1
-        competitors.put(c.getSailNo(), c);
+        competitors.add(c);
     }
 
-
-    public Boat getCompetitor(int sailno) {
-        // oppgave 1
-        return competitors.get(sailno);
-    }
-
-
-    public Collection<Boat> getCompetitors() {
-        ArrayList<Boat> comps = new ArrayList<>();
-        Set<Integer> keys = competitors.keySet();
-        for (int k : keys){
-            comps.add(competitors.get(k));
+    private void printCompetitors() {
+        for (Boat competitor : competitors){
+            competitor.getName();
+            System.out.println("|");
+            competitor.getSailNo();
+            System.out.println("|");
+            competitor.getPlacementsResults();
+            System.out.println("|");
         }
-        return comps;
     }
 
 
-    public void prepareNewRace() {
+    private void prepareNewRace() {
         this.currentRace ++;
 
     }
 
-
-    public void registerFinish(int sailno) {
+    private void registerFinish(Boat competitor) {
         // Check that the boat is a competitor
-        if (!competitors.containsKey(sailno)){
-            System.out.println("Boat with" + sailno + "is not a registered competitor");
+        if (!competitors.contains(competitor)) {
+            System.out.println(competitor.getName() + "is not a competitor");
             return;
         }
-        if (competitors.get(sailno).getPassedGoal()){
-            System.out.println("Boat with" + sailno + "has already passed goal");
+        // Check that the boat has not passed goal this race.
+        if (competitor.getPassedGoal()) {
+            System.out.println(competitor.getName() + "has already passed goal");
             return;
         }
-        competitors.get(sailno).addPlacement(this.currentRace, this.raceFinish);
+        addCompetitor(competitor);
         raceFinish ++;
+
     }
 
 
     // oppgave 2
     public void endRace() {
-        // Iterate through the entire hashmap and set goalPassed on all elements in the map to false.
-        Collection<Boat> values = competitors.values();
-        for (Boat competitor : values){
+        //set goalPassed on all elements in the list to false.
+        for (Boat competitor : competitors){
             competitor.setPassedGoal(false);
         }
         raceFinish = 1;
@@ -82,15 +76,14 @@ public class Regatta {
     }
 
     public void updateScore(){
-        Set<Integer> keys = competitors.keySet();
-        for (int key: keys
-             ) {
-            competitors.get(key).computeScore();
+        for (Boat competitor : competitors){
+            competitor.computeScore();
         }
+
     }
 
 
-    public void printResults() {
+    public void printResults(Boat b) {
         // oppgave 3
         Collection <Boat> b = (Collection<Boat>) getCompetitors();
         System.out.println("==========================================================");
@@ -105,6 +98,11 @@ public class Regatta {
             System.out.println(" Score:" + boat.getScore());
             System.out.println("==========================================================");
         }
+    }
+
+    private void printResults(){
+        //Sort all elements in the list from lowest to highest
+
     }
 
 
