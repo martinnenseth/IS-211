@@ -89,9 +89,8 @@ public class Regatta {
 
     public void printResults(){
         sortResult();
-        competitors.sort(Comparator.comparing(Boat::getScore).reversed());
+        competitors.sort(Comparator.comparing(Boat::getScore));
         printCompetitors();
-
     }
 
 
