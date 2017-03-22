@@ -26,29 +26,23 @@ public class Regatta {
     }
 
 
-    private void addCompetitor(Boat c) {
+    public void addCompetitor(Boat c) {
         // oppgave 1
         competitors.add(c);
     }
 
     private void printCompetitors() {
+        System.out.format("%15s%15s%15s%15s\n", "Båtnavn", "Seilnr", "Plasseringer", "Sum");
         for (Boat competitor : competitors){
-            competitor.getName();
-            System.out.println("|");
-            competitor.getSailNo();
-            System.out.println("|");
-            competitor.getPlacementsResults();
-            System.out.println("|");
+            System.out.format("%15s%15d%15d%15s\n", competitor.getName(), competitor.getSailNo(), competitor.getScore(), competitor.getPlacementsResults());
         }
     }
 
-
-    private void prepareNewRace() {
+    public void prepareNewRace() {
         this.currentRace ++;
-
     }
 
-    private void registerFinish(Boat competitor) {
+    public void registerFinish(Boat competitor) {
         // Check that the boat is a competitor
         if (!competitors.contains(competitor)) {
             System.out.println(competitor.getName() + "is not a competitor");
@@ -59,11 +53,9 @@ public class Regatta {
             System.out.println(competitor.getName() + "has already passed goal");
             return;
         }
-        addCompetitor(competitor);
+        competitor.addPlacement(this.currentRace, this.raceFinish);
         raceFinish ++;
-
     }
-
 
     // oppgave 2
     public void endRace() {
@@ -83,25 +75,22 @@ public class Regatta {
     }
 
 
-    public void printResults(Boat b) {
-        // oppgave 3
-        Collection <Boat> b = (Collection<Boat>) getCompetitors();
-        System.out.println("==========================================================");
-        System.out.println();
-        System.out.println("After race: " + (currentRace+1));
-        System.out.println();
-        System.out.println("==========================================================");
-        for (Boat boat: b
-             ) {
-            System.out.println("Boat Name: " + boat.getName() +" SailNr: " + boat.getSailNo() );
-            boat.getPlacementsResults();
-            System.out.println(" Score:" + boat.getScore());
-            System.out.println("==========================================================");
+    private void sortResult() {
+        //Sort all elements in the list from lowest to highest - based on the element's
+        for (Boat competitor : competitors) {
+                int sum = 0;
+                // As long as i is less than the size of the placements list, iterate
+            for (int i = 0; i < competitor.getPlacements().size(); i++){
+                    sum = sum + competitor.getPlacements().get(i).hashCode();
+                    competitor.setScore(sum);
+            }
         }
     }
 
-    private void printResults(){
-        //Sort all elements in the list from lowest to highest
+    public void printResults(){
+        sortResult();
+        competitors.sort(Comparator.comparing(Boat::getScore).reversed());
+        printCompetitors();
 
     }
 
@@ -111,6 +100,7 @@ public class Regatta {
      *
      * @param args the command line arguments
      */
+    /**
     public static void main(String[] args) {
         Regatta nm = new Regatta();
 
@@ -158,5 +148,5 @@ public class Regatta {
         nm.registerFinish(314);
         nm.endRace();
         nm.printResults();
-    }
+    } */
 }

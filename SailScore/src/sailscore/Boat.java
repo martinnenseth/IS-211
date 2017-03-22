@@ -53,7 +53,7 @@ public class Boat implements Comparable<Boat> {
         return name;
     }
 
-    public void getPlacementsResults(){
+    public String getPlacementsResults(){
         String prefix = "|";
         String infix = "| ";
         String postfix = "|";
@@ -62,7 +62,7 @@ public class Boat implements Comparable<Boat> {
         for (Integer i : placements)
             joiner.add(i.toString());
 
-        System.out.println("Placements: " + joiner.toString());
+        return joiner.toString();
     }
 
     public boolean getPassedGoal() {
@@ -73,6 +73,17 @@ public class Boat implements Comparable<Boat> {
         this.passedGoal = passedGoal;
     }
 
+    public List<Integer> getPlacements() {
+        return placements;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setPlacements(List<Integer> placements) {
+        this.placements = placements;
+    }
 
     public void computeScore(){
         int sum = 0;
