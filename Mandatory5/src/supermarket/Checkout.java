@@ -6,6 +6,9 @@
 package supermarket;
 
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  *
  * @author evenal
@@ -19,10 +22,16 @@ public class Checkout {
 
     SuperMarket shop;
     String name;
+    Queue <Customer> line;
 
 
     public Checkout(SuperMarket shop, int i) {
         this.shop = shop;
         this.name = "Checkout" + i;
+        this.line = new LinkedList<>();
+    }
+
+    public int getLineLenght(){
+        return line.size();
     }
 }

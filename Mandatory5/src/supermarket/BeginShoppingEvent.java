@@ -25,6 +25,6 @@ public class BeginShoppingEvent extends Event {
 
     @Override
     public Event happen() {
-        return new EndShoppingEvent(customer);
+        return new FinishShoppingEvent(customer);
     }
 }

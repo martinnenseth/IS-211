@@ -7,4 +7,16 @@ import eventsim.Event;
  */
 public class FinishShoppingEvent extends Event{
 
+    Customer customer;
+
+
+    public FinishShoppingEvent(Customer customer){
+        super(customer.endShoppingTime);
+        this.customer = customer;
+
+    }
+    @Override
+    public Event happen(){
+        return new PickLineEvent(customer);
+    }
 }
