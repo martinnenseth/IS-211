@@ -10,7 +10,7 @@ import eventsim.Event;
 
 /**
  * A customer enters the shop
- *
+ * Event #1
  * @author evenal
  */
 public class BeginShoppingEvent extends Event {

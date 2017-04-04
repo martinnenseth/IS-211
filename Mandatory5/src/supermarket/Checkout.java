@@ -34,4 +34,6 @@ public class Checkout {
     public int getLineLenght(){
         return line.size();
     }
+
+
 }
