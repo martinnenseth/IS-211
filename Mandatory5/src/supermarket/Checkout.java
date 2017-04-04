@@ -25,4 +25,6 @@ public class Checkout {
         this.shop = shop;
         this.name = "Checkout" + i;
     }
+
+
 }
