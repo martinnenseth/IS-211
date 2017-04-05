@@ -14,16 +14,21 @@ public class PickLineEvent extends Event {
 
     //The customer should enter a queue when he's done shopping.
     public PickLineEvent(Customer customer) {
-        super(EventSim.getClock() + customer.endShoppingTime);
+        super(customer.endShoppingTime);
         this.customer = customer;
     }
 
-    // Find a queue
 
 
+    /**
+     * A type 3 event do not cause any new events, except if the checkout point is not serving
+     * any customer, and the queue is empty. In that case a type 4 event will happen a short
+     * time later. (If the checkout wasn't doing anything it wakes up when the customer joins the queue.
+     * @return
+     */
     @Override
     public Event happen() {
-
-        return new
+        Checkout.line.add(customer);
+        return new CheckoutEvent(customer);
     }
 }

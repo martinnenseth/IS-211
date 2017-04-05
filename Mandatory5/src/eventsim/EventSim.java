@@ -21,8 +21,12 @@ public class EventSim {
      */
     private static final EventSim theSim = new EventSim();
 
-    /* The queue of events - those that happen earliest first */
+    /* The queue of events - those that happen earliest first - fifo */
     PriorityQueue<Event> eventQueue;
+
+    public void setClock(int clock) {
+        this.clock = clock;
+    }
 
     /**
      * The "current" time

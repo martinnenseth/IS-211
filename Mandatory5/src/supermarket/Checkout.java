@@ -6,6 +6,8 @@
 package supermarket;
 
 
+import eventsim.EventSim;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -22,7 +24,7 @@ public class Checkout {
 
     SuperMarket shop;
     String name;
-    Queue <Customer> line;
+    public static Queue <Customer> line;
 
 
     public Checkout(SuperMarket shop, int i) {
@@ -34,6 +36,7 @@ public class Checkout {
     public int getLineLenght(){
         return line.size();
     }
+
 
 
 }

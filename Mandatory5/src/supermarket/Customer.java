@@ -25,14 +25,37 @@ public class Customer {
     SuperMarket shop;
     String name;
 
-    int beginShoppingTime;
+    int beginShoppingTime; //start
     int shoppingDuration;
     int numProducts;
-    int endShoppingTime;
-    int queueWaitDuration;
-    int checkoutTime;
-    int checkoutDuration;
+    int endShoppingTime; //Done shopping
+    int queueWaitDuration; //In line
+    int checkoutDuration; // Time it takes for a customer to be handled by store employee
     int leaveTime;
+
+
+
+    int checkoutTime;   // Time when the customer will be removed from the queue to be handled by employee.
+
+
+    public int getNumProducts() {
+        return numProducts;
+    }
+    public void setCheckoutTime(int checkoutTime) {
+        this.checkoutTime = checkoutTime;
+    }
+
+    public int getCheckoutTime() {
+        return checkoutTime;
+    }
+
+    public int getCheckoutDuration() {
+        return checkoutDuration;
+    }
+
+    public void setCheckoutDuration(int checkoutDuration) {
+        this.checkoutDuration = checkoutDuration;
+    }
 
 
     public Customer(SuperMarket shop, int i) {
