@@ -9,19 +9,20 @@ import eventsim.EventSim;
  * Event #4
  */
 public class CheckoutEvent extends Event {
-    static Customer customer;
-    static EventSim sim = EventSim.getInstance();
+    Customer customer;
+
+    int lol = calcCheckoutTime();
 
     public CheckoutEvent(Customer customer) {
 
         //calcCheckoutTime();
-        super(calcCheckoutTime());
+        super(new CheckoutEvent(customer).calcCheckoutTime());
         this.customer = customer;
     }
 
     // Simulates the customer standing in queue...
     //If queue is empty, go straight to checkout().
-    public static int calcCheckoutTime() {
+    public int calcCheckoutTime() {
 
         if (Checkout.line.size() >= 0) {
             // The total time all other customers before this one have been waiting is this one's queueWaitTime.
@@ -30,24 +31,28 @@ public class CheckoutEvent extends Event {
                 customer.queueWaitDuration = customer.queueWaitDuration + customer.getCheckoutDuration();                 //Get some awesome data for each customer that tells us how long the other customers have been waiting....
             }
         }
-        else {customer.queueWaitDuration = 0;}
+        else {
+            customer.setCheckoutDuration(Checkout.PAY_DURATION + Checkout.PROD_DURATION * customer.getNumProducts());
+            customer.queueWaitDuration = 0;}
 
-        customer.setCheckoutTime(customer.queueWaitDuration + sim.getClock());
+        customer.setCheckoutTime(customer.queueWaitDuration + super.getTime());
         return customer.getCheckoutTime();
     }
 
+
     // Remove that customer from the line Queue.
     // Calculate the time cost of scanning all the customer products
-    // Set time to be EventSimtime + customer's checkoutTime(which is calculated in step one)
-    public void checkOut(EventSim sim)  {
+    // Set time to be EventTime + customer's)
+    public void checkOut()  {
         Customer customer = Checkout.line.remove();
-        sim.setClock(sim.getClock() + customer.getCheckoutDuration());
+        this.setTime(this.getTime() + customer.getCheckoutDuration()); //Set time in the event itself instead.
+
     }
 
 
     @Override
     public Event happen(){
-        checkOut(sim);
+        checkOut();
         return new EndShoppingEvent(customer);
     }
 }
