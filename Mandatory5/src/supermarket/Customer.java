@@ -32,9 +32,6 @@ public class Customer {
     int queueWaitDuration; //In line
     int checkoutDuration; // Time it takes for a customer to be handled by store employee
     int leaveTime;
-
-
-
     int checkoutTime;   // Time when the customer will be removed from the queue to be handled by employee.
 
 

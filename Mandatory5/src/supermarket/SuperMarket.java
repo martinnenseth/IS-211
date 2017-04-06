@@ -22,8 +22,8 @@ public class SuperMarket {
         supern.startSim();
     }
 
-    public static final int NUM_CHECKOUTS = 2;
-    public static final int NUM_CUSTOMERS = 4;
+    public static final int NUM_CHECKOUTS = 1;
+    public static final int NUM_CUSTOMERS = 1;
 
     Checkout[] checkouts;
     List<Customer> customers;

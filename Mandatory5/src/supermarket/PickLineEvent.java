@@ -14,7 +14,7 @@ public class PickLineEvent extends Event {
 
     //The customer should enter a queue when he's done shopping.
     public PickLineEvent(Customer customer) {
-        super(customer.endShoppingTime);
+        super(customer.endShoppingTime); // Customer teleports straight to the choice of picking a line.
         this.customer = customer;
     }
 
@@ -23,7 +23,7 @@ public class PickLineEvent extends Event {
         if (Checkout.line.size() >= 0) {
             // The total time all other customers before this one have been waiting is this one's queueWaitTime.
             for (Customer customer : Checkout.line) {
-                customer.setCheckoutDuration(Checkout.PAY_DURATION + Checkout.PROD_DURATION * customer.getNumProducts());
+                customer.setCheckoutDuration(Checkout.PAY_DURATION + (Checkout.PROD_DURATION * customer.getNumProducts()));
                 customer.queueWaitDuration = customer.queueWaitDuration + customer.getCheckoutDuration();                 //Get some awesome data for each customer that tells us how long the other customers have been waiting....
             }
         }
@@ -32,7 +32,7 @@ public class PickLineEvent extends Event {
             customer.queueWaitDuration = 0;}
 
         customer.setCheckoutTime(customer.queueWaitDuration + super.getTime());
-        return customer.getCheckoutTime();
+        return customer.getCheckoutTime() - customer.getCheckoutDuration();
     }
 
     /**
